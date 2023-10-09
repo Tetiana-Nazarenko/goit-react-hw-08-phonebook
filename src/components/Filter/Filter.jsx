@@ -1,15 +1,16 @@
-import React from 'react';
+//import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setContactsFilter } from 'redux/filtersSlice';
-import { getFilter } from 'redux/selectors';
-import { nanoid } from '@reduxjs/toolkit';
+
+import { setContactsFilter } from 'redux/contacts/filtersSlice';
+import { getFilter } from 'redux/contacts/selectors';
+//import { nanoid } from '@reduxjs/toolkit';
 
 import { FilterLabel, FilterInput } from './Filter.styled';
 
-const filterInputId = nanoid();
+//const filterInputId = nanoid();
 
-const Filter = () => {
+export const Filter = () => {
   const value = useSelector(getFilter);
   const dispatch = useDispatch();
 
@@ -19,15 +20,16 @@ const Filter = () => {
   };
 
   return (
-    <FilterLabel>
-      Find contacts by name
-      <FilterInput
-        type="text"
-        value={value}
-        onChange={handleFilter}
-        id={filterInputId}
-      />
-    </FilterLabel>
+    <>
+      <FilterLabel>
+        Find contacts by name
+        <FilterInput
+          type="text"
+          value={value}
+          onChange={handleFilter}
+          //id={filterInputId}
+        />
+      </FilterLabel>
+    </>
   );
 };
-export default Filter;

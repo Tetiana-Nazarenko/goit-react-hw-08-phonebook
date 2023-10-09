@@ -3,6 +3,9 @@ import { fetchContacts, addContact, deleteContact } from './operations';
 
 //import { persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage';
+// Визначення функції getActions, яка повертає умову isAnyOf для зазначеного типу дії
+// const getActions = type =>
+//   isAnyOf(fetchContacts[type], addContact[type], deleteContact[type]);
 
 const contactsInitialState = {
   items: [

@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 
 export const ContactsList = styled.ul`
-  margin: 50px;
+  margin: 20px;
+  padding: 20px;
+  background-color: yellow;
+  border-radius: 15px;
+  border: 1px solid black;
+
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 
   color: blue;
   font-size: 26px;
@@ -17,7 +22,6 @@ export const ContactItem = styled.li`
 `;
 export const DeleteButton = styled.button`
   padding: 10px 10px;
-  margin-left: 20px;
 
   font-weight: 600;
   color: white;

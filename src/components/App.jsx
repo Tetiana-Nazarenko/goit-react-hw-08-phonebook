@@ -1,72 +1,106 @@
-// import { nanoid } from 'nanoid';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'redux/operations.js';
-import { getError, getIsLoading } from 'redux/selectors.js';
+import { useEffect, lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { Layout } from './Layout';
 
-import Contacts from './Contacts/Contacts.jsx';
+import { PrivateRoute } from './PrivateRoute';
+import { RestrictedRoute } from './RestrictedRoute';
 
-import { ContactForm } from './ContactForm/ContactForm.jsx';
+import { refreshUser } from 'redux/auth/operations';
+import { useAuth } from 'hooks/useAuth';
 
-import Filter from './Filter/Filter.jsx';
+// import { fetchContacts } from 'redux/contacts/operations.js';
+// import { getError, getIsLoading } from 'redux/contacts/selectors.js';
+
+//import Contacts from './Contacts/Contacts.jsx';
+
+//import { ContactForm } from './ContactForm/ContactForm.jsx';
+
+//import Filter from './Filter/Filter.jsx';
 
 // Стилизация
-import { Layout, HeadTitle, ContactsTitle } from './Layout.js';
-import { GlobalStyle } from './GlobaleStyle.js';
+//import { Layout, HeadTitle, ContactsTitle } from './Layout.js';
+//import { GlobalStyle } from './GlobaleStyle.js';
+
+const HomePage = lazy(() => import('../pages/Home'));
+const RegisterPage = lazy(() => import('../pages/Register'));
+const LoginPage = lazy(() => import('../pages/Login'));
+const ContactsPage = lazy(() => import('../pages/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector(getIsLoading);
-  const error = useSelector(getError);
-  //const defaultContacts = useSelector(state => state.tasks);
-  // const [contacts, setContacts] = useState(getContacts);
-  // const [filter, setFilter] = useState('');
+  const { isRefreshing } = useAuth();
+  // const isLoading = useSelector(getIsLoading);
+  // const error = useSelector(getError);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  // //*** кастомні методи*/
-  // const addContact = contact => {
-  //   const isInContacts = contacts.some(
-  //     ({ name }) => name.toLowerCase() === contact.name.toLowerCase()
-  //   );
-
-  //   if (isInContacts) {
-  //     alert(`${contact.name} is already in contacts!`);
-  //     return;
-  //   }
-
-  //   setContacts(prevState => [{ id: nanoid(), ...contact }, ...prevState]);
-  // };
-
-  // const handleFilter = event => {
-  //   setFilter(event.target.value);
-  // };
-
-  // const handleDelete = id => {
-  //   setContacts(prevContacts =>
-  //     prevContacts.filter(contact => contact.id !== id)
-  //   );
-  // };
-
-  // const filterContacts = contacts.filter(contact =>
-  //   contact.name.toLowerCase().includes(filter.toLowerCase())
-  // );
   //*** RENDER */
-
-  return (
-    <Layout>
-      <HeadTitle>Phonebook</HeadTitle>
-      <ContactForm />
-
-      <ContactsTitle>Contacts</ContactsTitle>
-
-      <Filter />
-      {isLoading && !error && <b> Request in progress...</b>}
-      <Contacts />
-      <GlobalStyle />
-    </Layout>
+  return isRefreshing ? (
+    <b> Refreshing user...</b>
+  ) : (
+    <div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                redirectTo="/login"
+                component={<RegisterPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+            }
+          />
+        </Route>
+        <Route path="*" element={<HomePage />} />
+      </Routes>
+    </div>
   );
 };
+
+{
+  /* <Layout>
+  {
+    /* <HeadTitle>Phonebook</HeadTitle> */
+}
+{
+  /* /* <ContactForm /> */
+}
+{
+  /* <ContactsTitle>Contacts</ContactsTitle> */
+}
+
+{
+  /* <Filter /> */
+}
+{
+  /* {isLoading && !error && <b> Request in progress...</b>} */
+}
+{
+  /* <Contacts /> */
+}
+{
+  /* // <GlobalStyle /> */
+}
+{
+  /* </Layout> */
+}

@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getVisibleContacts } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
+
+import { getVisibleContacts } from 'redux/contacts/selectors';
+import { deleteContact } from 'redux/contacts/operations';
 
 import { ContactsList, DeleteButton, ContactItem } from './Contacts.styled';
 
-const Contacts = () => {
+export const Contacts = () => {
   const contacts = useSelector(getVisibleContacts);
   const dispatch = useDispatch();
 
@@ -30,4 +31,4 @@ const Contacts = () => {
     </ContactsList>
   );
 };
-export default Contacts;
+//export default Contacts;

@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { nanoid } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 import { useSelector, useDispatch } from 'react-redux';
-import { getVisibleContacts } from 'redux/selectors';
+
+import { Filter } from 'components/Filter/Filter';
+import { getVisibleContacts } from 'redux/contacts/selectors';
 
 //import { addContact } from 'redux/contactSlice';
-import { addContact } from 'redux/operations';
+import { addContact } from 'redux/contacts/operations';
 
 import {
+  FormBlock,
   Form,
   LabelTitle,
+  InputName,
   Input,
   ButtonAddContact,
 } from './ContactForm.styled';
@@ -64,34 +68,39 @@ export const ContactForm = () => {
 
   //*** */
   return (
-    <Form onSubmit={handleSubmit}>
-      <LabelTitle htmlFor={nameInputId}>
-        Name:
-        <Input
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
-      </LabelTitle>
+    <>
+      <FormBlock>
+        <Form onSubmit={handleSubmit}>
+          <LabelTitle htmlFor={nameInputId}>
+            Name:
+            <InputName
+              type="text"
+              name="name"
+              value={name}
+              onChange={handleChange}
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              required
+            />
+          </LabelTitle>
 
-      <LabelTitle htmlFor={numberInputId}>
-        Number:
-        <Input
-          type="tel"
-          name="number"
-          value={number}
-          onChange={handleChange}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-        />
-      </LabelTitle>
+          <LabelTitle htmlFor={numberInputId}>
+            Number:
+            <Input
+              type="tel"
+              name="number"
+              value={number}
+              onChange={handleChange}
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+            />
+          </LabelTitle>
 
-      <ButtonAddContact type="submit">Add contact </ButtonAddContact>
-    </Form>
+          <ButtonAddContact type="submit">Add contact </ButtonAddContact>
+        </Form>
+      </FormBlock>
+      <Filter />
+    </>
   );
 };
