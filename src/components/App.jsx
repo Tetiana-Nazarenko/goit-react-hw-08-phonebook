@@ -76,31 +76,3 @@ export const App = () => {
     </div>
   );
 };
-
-{
-  /* <Layout>
-  {
-    /* <HeadTitle>Phonebook</HeadTitle> */
-}
-{
-  /* /* <ContactForm /> */
-}
-{
-  /* <ContactsTitle>Contacts</ContactsTitle> */
-}
-
-{
-  /* <Filter /> */
-}
-{
-  /* {isLoading && !error && <b> Request in progress...</b>} */
-}
-{
-  /* <Contacts /> */
-}
-{
-  /* // <GlobalStyle /> */
-}
-{
-  /* </Layout> */
-}
